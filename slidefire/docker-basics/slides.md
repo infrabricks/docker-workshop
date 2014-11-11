@@ -628,9 +628,8 @@ Interessant ist die SIZE-Spalte, welche Aktion wie viel zum FS-Volumen beigetrag
 **`~$ docker run | VOLUMES`** 
 #### Mounten von Verzeichnissen in Container
 
-Instanziieren eines einzelnen Containers
-Vermutlich das Kommando mit den meisten Parametern.
 ***
+
 ```bash
 ~$ mkdir test
 ~$ touch test/x
@@ -641,12 +640,28 @@ root@27e2c738b5df:/# ls -al /y
 total 8
 drwxrwxr-x  2 1000 1000 4096 Sep 22 13:15 .
 drwxr-xr-x 22 root root 4096 Sep 22 13:24 ..
--rw-rw-r--  1 1000 1000    0 Sep 22 13:15 x
+ rw-rw-r--  1 1000 1000    0 Sep 22 13:15 x
 ```
+
+-
+**`~$ docker run | --volumes-from`** 
+#### Mounten von Verzeichnissen aus anderen Container
+
 ***
-  * Wichtig: Ein „Mount“ (z.B. NFS) kann nicht direkt in einen Container gemountet werden (weil ein Mount nicht nochmal gemountet werden kann)
-  * Stattdessen Verzeichnisse auf dem Mount erzeugen, diese in den Container übergeben.
-  * Der Host-Pfad kann weggelassen werden. Dann verwaltet Docker diesen intern (*).
+
+```bash
+~$ mkdir test
+~$ touch test/x
+
+$ docker run -ti --detach -v /home/vagrant/test:/y --name myvolumecont ubuntu
+
+$ docker run -ti --volumes-from myvolumecont ubuntu
+root@27e2c738b5df:/# ls -al /y
+total 8
+drwxrwxr-x  2 1000 1000 4096 Sep 22 13:15 .
+drwxr-xr-x 22 root root 4096 Sep 22 13:24 ..
+ rw-rw-r--  1 1000 1000    0 Sep 22 13:15 x
+```
 
 ---
 ## Ziel: Bauanleitung für Apache-Container 
