@@ -1,5 +1,5 @@
 #!/bin/bash
-DECK=docker-bascis
+DECK=docker-basics
 docker build -t="rossbachp/$DECK" .
 DATE=`date +'%Y%m%d%H%M'`
 ID=$(docker inspect -f "{{.Id}}" rossbachp/$DECK)
