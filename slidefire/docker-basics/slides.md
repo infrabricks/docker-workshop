@@ -28,7 +28,7 @@
 ### Cloud First and Cloud Ready
 
 ***
-### Infrastructur First
+### Infrastructure First
 
 -
 ### DevOps-Platform
@@ -51,7 +51,7 @@
   * Kernel-Virtualisierung
   * Architektur
   * Komponenten
-  * Enable your self
+  * Enable yourself
 -
 ### Die Docker Kernel-Virtualisierung
 
@@ -76,7 +76,7 @@
     - btrfs
   * /var/lib/docker
   * Teile Images durch die Registry (Hub, Private, Service)
-  * Teile die selben Layer mit vielen verschiedenen Projekt
+  * Teile dieselben Layer mit vielen verschiedenen Projekten
     - Base Images
     - Nur einmal bauen, laden und sehr oft verwenden!
 -
@@ -88,12 +88,12 @@
 ### Docker Container
 
   * Runtime
-    - Teile Files System **genau** eines Images
+    - Teile Filesystem **genau** eines Images
     - Hinzufügen eine Read/Write File-Layer
     - Zuteilung von Resourcen (CPU/Memory/IO)
     - Einschränkung der Rechte des Prozesses
     - Zuteilung von Devices, Mount Points
-    - Zuteilung eines Netzwerks und öffnen von Ports
+    - Zuteilung eines Netzwerks und Öffnen von Ports
     - Konfiguration
     - Erzeugen des Prozesses
   * Der Daemon überwacht und verwaltet die Container-Prozesse
@@ -104,7 +104,7 @@
 ![Docker Network](images/docker-network.jpg)
 
 -
-### Enable your self: Boot2Docker
+### Enable yourself: Boot2Docker
 
 ![Boot2Docker](images/boot2docker.png)
 
@@ -120,10 +120,10 @@
     - Get a stick!
     - `docker-workshop_docker-workshop-vm_*.ova`
     - Double Click oder Virtual Box > File > Import Appliance ...
-    - Login: `ssh -p 2200 demo@localhost` Password: demo
+    - Login: `ssh -p 2200 -l vagrant localhost` Password: vagrant
   ```
-  $ ssh -p 2200 demo@localhost
-  demo@localhost's password:
+  $ ssh -p 2200 -l vagrant localhost
+  vagrant@localhost's password:
   Welcome to Ubuntu 14.04 LTS (GNU/Linux 3.13.0-24-generic x86_64)
   ...
   ```
@@ -131,7 +131,7 @@
 ---
 ## Docker Workshop Übersicht
 
-  * Bascis
+  * Basics
   * Images
   * Container
     - run
@@ -169,7 +169,7 @@ Git commit (server): c78088f
 ```
 ***
   * Mit Docker 1.3 kommuniziert der Client mit dem Server Remote via SSL damit *Trusted* Images überprüft werden können (boot2docker 1.3)
-  * Client und Server müssen passen!?
+  * Client und Server müssen passen
 
 -
 **`~$ docker help` **
@@ -219,13 +219,13 @@ centos    The official build of CentOS.   442       [OK]
 ```
 ***
   * Suche ist etwas mühsam und unübersichtlich
-  * *Stars* sind eine ungenaue Bewertungsangabe, Suche nach *Official* bzw. *Trusted“* Images nicht möglich.
+  * *Stars* sind eine ungenaue Bewertungsangabe, Suche nach *Official* bzw. *Trusted* Images nicht möglich.
   * Versionen (z.B. hier von CentOS) werden nicht angezeigt, nur das Repository
   * Besser zum Suchen: [Docker Hub](https://registry.hub.docker.com/search)
 
 -
 **`~$ docker pull`**
-####  Wir brauchen das Image lokal um es zu verwenden
+####  Wir brauchen das Image lokal, um es zu verwenden
 
   * Download eines Repositories (oder Teilen davon) von der öffentlichen Docker-Registry.
 ***
@@ -240,6 +240,26 @@ $ docker pull redis:latest
 ```
 ***
   * **Wichtig:** Tag mit angeben! Sonst wird das gesamte Repository gezogen (z.B. Ubuntu 12.04/12.10/13.04/13.10/14.04  >> 1GB)
+
+-
+**`~$ docker pull` am Beispiel**
+
+
+  * Löschen eines Images und Pullen aus der lokalen Registry der VM.
+***
+```bash
+$ docker rmi dockerfile/nginx
+Untagged: dockerfile/nginx:latest
+
+$ docker rmi 127.0.0.1:5000/dockerfile/nginx
+Untagged: 127.0.0.1:5000/dockerfile/nginx:latest
+Deleted: 52cea49d86cfe4fedc121007af36011c080548a982452eee454966d5506c6ddf
+...
+
+$ docker pull 127.0.0.1:5000/dockerfile/nginx:latest
+Pulling repository 127.0.0.1:5000/dockerfile/nginx
+...
+```
 
 -
 **`~$ docker images | inspect`**
