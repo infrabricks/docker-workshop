@@ -1,4 +1,4 @@
-FROM wjax2014/java:jre-7
+FROM rossbachp/java:jre-7
 MAINTAINER Peter Rossbach <peter.rossbach@bee42.com>
 
 ENV TOMCAT_MINOR_VERSION 8.0.14

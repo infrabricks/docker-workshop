@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build -t="wjax2014/tomcat:8" .
+docker build -t="rossbachp/tomcat:8" .
