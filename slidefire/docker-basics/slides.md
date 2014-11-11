@@ -323,6 +323,7 @@ c2a5714574ba        35 hours ago        /bin/sh -c groupadd -r tomcat -g 4242 &&
 ####  Das wichtigste Kommando: Container starten!
 
 Instanziieren eines einzelnen Containers
+
 Vermutlich das Kommando mit den meisten Parametern.
 ***
 ```bash
@@ -337,21 +338,21 @@ CTRL+P CTRL+Q zum detachen der shell
 ***
   * Im Image ist optional ein Kommando integriert.
   * Im Fall der Bash hier: Ein `exit` oder `CTRL-D` beendet die Shell, d.h. den Prozess, d.h. den Container.
-  * So ist der Container aber noch laufigfähig vorhanden!
+  * So ist der Container aber noch lauffähig vorhanden!
 -
 ### Was bedeutet ein `docker start`?
 
-  * Müssen wir hier nicht erklären, was wirklich passiert ist?
-  * Container start bedeutet ja einiges:
+  * Was in Wirklichkeit beim Start/Run geschieht:
+  * Container start bedeutet ja einiges
     - Write layer über das Images
     - Bereitstellen des Netzwerks
     - Schaffen eines Namespace
-    - Einschränkungen auf der Prozess vornehmen (CGroups, Capabillities)
+    - Einschränkungen auf der Prozess vornehmen (CGroups, Capabilities)
     - Optional
       - Links vermitteln
-      - Volumen mounten
-      - Ports Freigeben
-    - Prozess starten mit einem bestimmten Nutzer
+      - Volumes mounten
+      - Ports freigeben
+    - Prozess starten, unter einem bestimmten Nutzer
 -
 **`~$ docker ps`**
 ####  Container anzeigen
@@ -375,8 +376,17 @@ e6aa98c81a41
   * Es existieren verschiedene Filtermöglichkeiten (`docker ps --help`)
 
 -
-**`~$ docker ps | attach`** 
+**`~$ docker ps | attach`**
 #### Sich mit interaktiven Containern verbinden
+
+```bash
+~$ docker ps
+CONTAINER ID        IMAGE                         COMMAND             CREATED             STATUS              PORTS               NAMES
+e6aa98c81a41        127.0.0.1:5000/ubuntu:14.04   /bin/bash           6 seconds ago       Up 5 seconds                            ecstatic_fermat
+
+
+~$ docker attach e6aa98c81a41
+```
 
 -
 **`~$ docker rm `**
@@ -414,7 +424,7 @@ exit
 
 -
 **`~$ docker events`**
- #### Ereignisse des Docker Daemons ansehen
+#### Ereignisse des Docker Daemons ansehen
 
 Der Docker Daemon zeigt Ereignisse aus der API bzw. der Kommandozeile an.
 ***
@@ -468,9 +478,8 @@ root                4201                7159                0                   
 ***
   * Nur rudimentäre Informationen (s. deep dive später)
 ---
-## Ausflug
-Wollen wir hier einen Ausflug in die Namespaces und Cgroups wagen?
-Anzeige welche Rechte wirklich vergeben sind im /proc File System
+## Ausflug: Namespaces, Prozesse, Netzwerk
+
 ---
 ## Ziel: Apache-Container manuell bauen 
 
