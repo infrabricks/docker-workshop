@@ -771,7 +771,7 @@ Die lassen sich unabhängig von Registries transportieren.
 $ docker save -o ./apache2.tar infrabricks/apache2
 
 $ ls -al ./apache2.tar
--rw-rw-r-- 1 vagrant vagrant 249390080 Sep 22 14:03 ./apache2.tar
+ rw-rw-r-- 1 vagrant vagrant 249390080 Sep 22 14:03 ./apache2.tar
 
 $ tar tf apache2.tar
 ./
@@ -859,25 +859,3 @@ N1_NAME=/n2/n1
   * Funktioniert nicht zyklisch (N2  N1, da der Container erstmal da sein muss)
   * Skaliert nicht. (Was wenn ich 2x N1 habe?)
   * Abhängigkeiten nicht dynamisch (Wenn N1 neu, dann muss auch N2 neu)
----
-Würde gerne als Abspann die noch fehlenden Kommandos kurz erläutern!
----
-##
-  * Nach dem Link sollten wir ein Beispiel mit einer Gruppe von Container machen!
-    - Zugriff auf einen Restservice Webapp mit einer couchdb im Backend?
-    - java / tomcat / rest Service (Volumne) 7 couchdb als Speicher für die Dokumente
-    - All ist HTTP
-      - Zweite App ein Angular JS frontend das die diesesn CRUD Service nutzt!
-  * Starte mit fig.
-  * Wollen wir das Commando docker exec erklären => debug Schau mal einer Kuck…
-    - Dann müssen wir den Tomcat auf der Basis von JDK bereitstellen, sonst fehlen die Java Tools..
-  * Sicherung der Couch DB und starten in einem anderen Container
-    - Volumen ausgelagert
-    - Scratch Data Volumne für Data und log trennen
-  * Apache als LB verknüpfen und Orchestrieren.
-  * Bleibt noch für den Ausblick
-    - Test von Infrastruktur
-    - Steuerung via fleed und systemd
-    - Kubernets Pod?
-    - Network (flannel, wire, weave, pipework)
-    - Storage (flokker)
