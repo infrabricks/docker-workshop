@@ -28,7 +28,7 @@
 ### Cloud First and Cloud Ready
 
 ***
-### Infrastructur First
+### Infrastructure First
 
 -
 ### DevOps-Platform
@@ -51,7 +51,7 @@
   * Kernel-Virtualisierung
   * Architektur
   * Komponenten
-  * Enable your self
+  * Enable yourself
 -
 ### Die Docker Kernel-Virtualisierung
 
@@ -76,7 +76,7 @@
     - btrfs
   * /var/lib/docker
   * Teile Images durch die Registry (Hub, Private, Service)
-  * Teile die selben Layer mit vielen verschiedenen Projekt
+  * Teile dieselben Layer mit vielen verschiedenen Projekten
     - Base Images
     - Nur einmal bauen, laden und sehr oft verwenden!
 -
@@ -88,12 +88,12 @@
 ### Docker Container
 
   * Runtime
-    - Teile Files System **genau** eines Images
+    - Teile Filesystem **genau** eines Images
     - Hinzufügen eine Read/Write File-Layer
     - Zuteilung von Resourcen (CPU/Memory/IO)
     - Einschränkung der Rechte des Prozesses
     - Zuteilung von Devices, Mount Points
-    - Zuteilung eines Netzwerks und öffnen von Ports
+    - Zuteilung eines Netzwerks und Öffnen von Ports
     - Konfiguration
     - Erzeugen des Prozesses
   * Der Daemon überwacht und verwaltet die Container-Prozesse
@@ -104,7 +104,7 @@
 ![Docker Network](images/docker-network.jpg)
 
 -
-### Enable your self: Boot2Docker
+### Enable yourself: Boot2Docker
 
 ![Boot2Docker](images/boot2docker.png)
 
@@ -120,10 +120,10 @@
     - Get a stick!
     - `docker-workshop_docker-workshop-vm_*.ova`
     - Double Click oder Virtual Box > File > Import Appliance ...
-    - Login: `ssh -p 2200 demo@localhost` Password: demo
+    - Login: `ssh -p 2200 -l vagrant localhost` Password: vagrant
   ```
-  $ ssh -p 2200 demo@localhost
-  demo@localhost's password:
+  $ ssh -p 2200 -l vagrant localhost
+  vagrant@localhost's password:
   Welcome to Ubuntu 14.04 LTS (GNU/Linux 3.13.0-24-generic x86_64)
   ...
   ```
@@ -131,7 +131,7 @@
 ---
 ## Docker Workshop Übersicht
 
-  * Bascis
+  * Basics
   * Images
   * Container
     - run
@@ -169,7 +169,7 @@ Git commit (server): c78088f
 ```
 ***
   * Mit Docker 1.3 kommuniziert der Client mit dem Server Remote via SSL damit *Trusted* Images überprüft werden können (boot2docker 1.3)
-  * Client und Server müssen passen!?
+  * Client und Server müssen passen
 
 -
 **`~$ docker help` **
@@ -219,13 +219,13 @@ centos    The official build of CentOS.   442       [OK]
 ```
 ***
   * Suche ist etwas mühsam und unübersichtlich
-  * *Stars* sind eine ungenaue Bewertungsangabe, Suche nach *Official* bzw. *Trusted“* Images nicht möglich.
+  * *Stars* sind eine ungenaue Bewertungsangabe, Suche nach *Official* bzw. *Trusted* Images nicht möglich.
   * Versionen (z.B. hier von CentOS) werden nicht angezeigt, nur das Repository
   * Besser zum Suchen: [Docker Hub](https://registry.hub.docker.com/search)
 
 -
 **`~$ docker pull`**
-####  Wir brauchen das Image lokal um es zu verwenden
+####  Wir brauchen das Image lokal, um es zu verwenden
 
   * Download eines Repositories (oder Teilen davon) von der öffentlichen Docker-Registry.
 ***
@@ -240,6 +240,26 @@ $ docker pull redis:latest
 ```
 ***
   * **Wichtig:** Tag mit angeben! Sonst wird das gesamte Repository gezogen (z.B. Ubuntu 12.04/12.10/13.04/13.10/14.04  >> 1GB)
+
+-
+**`~$ docker pull` am Beispiel**
+
+
+  * Löschen eines Images und Pullen aus der lokalen Registry der VM.
+***
+```bash
+$ docker rmi dockerfile/nginx
+Untagged: dockerfile/nginx:latest
+
+$ docker rmi 127.0.0.1:5000/dockerfile/nginx
+Untagged: 127.0.0.1:5000/dockerfile/nginx:latest
+Deleted: 52cea49d86cfe4fedc121007af36011c080548a982452eee454966d5506c6ddf
+...
+
+$ docker pull 127.0.0.1:5000/dockerfile/nginx:latest
+Pulling repository 127.0.0.1:5000/dockerfile/nginx
+...
+```
 
 -
 **`~$ docker images | inspect`**
@@ -303,6 +323,7 @@ c2a5714574ba        35 hours ago        /bin/sh -c groupadd -r tomcat -g 4242 &&
 ####  Das wichtigste Kommando: Container starten!
 
 Instanziieren eines einzelnen Containers
+
 Vermutlich das Kommando mit den meisten Parametern.
 ***
 ```bash
@@ -317,21 +338,21 @@ CTRL+P CTRL+Q zum detachen der shell
 ***
   * Im Image ist optional ein Kommando integriert.
   * Im Fall der Bash hier: Ein `exit` oder `CTRL-D` beendet die Shell, d.h. den Prozess, d.h. den Container.
-  * So ist der Container aber noch laufigfähig vorhanden!
+  * So ist der Container aber noch lauffähig vorhanden!
 -
 ### Was bedeutet ein `docker start`?
 
-  * Müssen wir hier nicht erklären, was wirklich passiert ist?
-  * Container start bedeutet ja einiges:
+  * Was in Wirklichkeit beim Start/Run geschieht:
+  * Container start bedeutet ja einiges
     - Write layer über das Images
     - Bereitstellen des Netzwerks
     - Schaffen eines Namespace
-    - Einschränkungen auf der Prozess vornehmen (CGroups, Capabillities)
+    - Einschränkungen auf der Prozess vornehmen (CGroups, Capabilities)
     - Optional
       - Links vermitteln
-      - Volumen mounten
-      - Ports Freigeben
-    - Prozess starten mit einem bestimmten Nutzer
+      - Volumes mounten
+      - Ports freigeben
+    - Prozess starten, unter einem bestimmten Nutzer
 -
 **`~$ docker ps`**
 ####  Container anzeigen
@@ -355,8 +376,17 @@ e6aa98c81a41
   * Es existieren verschiedene Filtermöglichkeiten (`docker ps --help`)
 
 -
-**`~$ docker ps | attach`** 
+**`~$ docker ps | attach`**
 #### Sich mit interaktiven Containern verbinden
+
+```bash
+~$ docker ps
+CONTAINER ID        IMAGE                         COMMAND             CREATED             STATUS              PORTS               NAMES
+e6aa98c81a41        127.0.0.1:5000/ubuntu:14.04   /bin/bash           6 seconds ago       Up 5 seconds                            ecstatic_fermat
+
+
+~$ docker attach e6aa98c81a41
+```
 
 -
 **`~$ docker rm `**
@@ -394,7 +424,7 @@ exit
 
 -
 **`~$ docker events`**
- #### Ereignisse des Docker Daemons ansehen
+#### Ereignisse des Docker Daemons ansehen
 
 Der Docker Daemon zeigt Ereignisse aus der API bzw. der Kommandozeile an.
 ***
@@ -448,9 +478,8 @@ root                4201                7159                0                   
 ***
   * Nur rudimentäre Informationen (s. deep dive später)
 ---
-## Ausflug
-Wollen wir hier einen Ausflug in die Namespaces und Cgroups wagen?
-Anzeige welche Rechte wirklich vergeben sind im /proc File System
+## Ausflug: Namespaces, Prozesse, Netzwerk
+
 ---
 ## Ziel: Apache-Container manuell bauen 
 
@@ -599,9 +628,8 @@ Interessant ist die SIZE-Spalte, welche Aktion wie viel zum FS-Volumen beigetrag
 **`~$ docker run | VOLUMES`** 
 #### Mounten von Verzeichnissen in Container
 
-Instanziieren eines einzelnen Containers
-Vermutlich das Kommando mit den meisten Parametern.
 ***
+
 ```bash
 ~$ mkdir test
 ~$ touch test/x
@@ -612,12 +640,28 @@ root@27e2c738b5df:/# ls -al /y
 total 8
 drwxrwxr-x  2 1000 1000 4096 Sep 22 13:15 .
 drwxr-xr-x 22 root root 4096 Sep 22 13:24 ..
--rw-rw-r--  1 1000 1000    0 Sep 22 13:15 x
+ rw-rw-r--  1 1000 1000    0 Sep 22 13:15 x
 ```
+
+-
+**`~$ docker run | --volumes-from`** 
+#### Mounten von Verzeichnissen aus anderen Container
+
 ***
-  * Wichtig: Ein „Mount“ (z.B. NFS) kann nicht direkt in einen Container gemountet werden (weil ein Mount nicht nochmal gemountet werden kann)
-  * Stattdessen Verzeichnisse auf dem Mount erzeugen, diese in den Container übergeben.
-  * Der Host-Pfad kann weggelassen werden. Dann verwaltet Docker diesen intern (*).
+
+```bash
+~$ mkdir test
+~$ touch test/x
+
+$ docker run -ti --detach -v /home/vagrant/test:/y --name myvolumecont ubuntu
+
+$ docker run -ti --volumes-from myvolumecont ubuntu
+root@27e2c738b5df:/# ls -al /y
+total 8
+drwxrwxr-x  2 1000 1000 4096 Sep 22 13:15 .
+drwxr-xr-x 22 root root 4096 Sep 22 13:24 ..
+ rw-rw-r--  1 1000 1000    0 Sep 22 13:15 x
+```
 
 ---
 ## Ziel: Bauanleitung für Apache-Container 
@@ -727,7 +771,7 @@ Die lassen sich unabhängig von Registries transportieren.
 $ docker save -o ./apache2.tar infrabricks/apache2
 
 $ ls -al ./apache2.tar
--rw-rw-r-- 1 vagrant vagrant 249390080 Sep 22 14:03 ./apache2.tar
+ rw-rw-r-- 1 vagrant vagrant 249390080 Sep 22 14:03 ./apache2.tar
 
 $ tar tf apache2.tar
 ./
@@ -815,25 +859,3 @@ N1_NAME=/n2/n1
   * Funktioniert nicht zyklisch (N2  N1, da der Container erstmal da sein muss)
   * Skaliert nicht. (Was wenn ich 2x N1 habe?)
   * Abhängigkeiten nicht dynamisch (Wenn N1 neu, dann muss auch N2 neu)
----
-Würde gerne als Abspann die noch fehlenden Kommandos kurz erläutern!
----
-##
-  * Nach dem Link sollten wir ein Beispiel mit einer Gruppe von Container machen!
-    - Zugriff auf einen Restservice Webapp mit einer couchdb im Backend?
-    - java / tomcat / rest Service (Volumne) 7 couchdb als Speicher für die Dokumente
-    - All ist HTTP
-      - Zweite App ein Angular JS frontend das die diesesn CRUD Service nutzt!
-  * Starte mit fig.
-  * Wollen wir das Commando docker exec erklären => debug Schau mal einer Kuck…
-    - Dann müssen wir den Tomcat auf der Basis von JDK bereitstellen, sonst fehlen die Java Tools..
-  * Sicherung der Couch DB und starten in einem anderen Container
-    - Volumen ausgelagert
-    - Scratch Data Volumne für Data und log trennen
-  * Apache als LB verknüpfen und Orchestrieren.
-  * Bleibt noch für den Ausblick
-    - Test von Infrastruktur
-    - Steuerung via fleed und systemd
-    - Kubernets Pod?
-    - Network (flannel, wire, weave, pipework)
-    - Storage (flokker)
