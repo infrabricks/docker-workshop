@@ -885,3 +885,23 @@ N1_NAME=/n2/n1
   * Funktioniert nicht zyklisch (N2  N1, da der Container erstmal da sein muss)
   * Skaliert nicht. (Was wenn ich 2x N1 habe?)
   * Abhängigkeiten nicht dynamisch (Wenn N1 neu, dann muss auch N2 neu)
+
+---
+### Many Thanks for following!
+
+Start this presentation with
+  * `docker run -d -ti -p 8002:80 rossbachp/docker-basics:conli2014`
+  * `open http://<dockerhost>:8002/docker-basics`
+
+Andreas & Peter
+
+follow our blog [infrabricks.de](http://www.infrabricks.de)
+
+@PRossbach
+@aschmidt75
+
+-
+## bee42 boarding time
+
+![bee a solution](images/bee42-boarding.png)
+Work with the beekeeper!

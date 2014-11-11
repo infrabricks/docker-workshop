@@ -815,8 +815,8 @@ It´s up to you!
 ### Many Thanks for following!
 
 Start this presentation with
-  * `docker run -d -ti -p 8007:80 rossbachp/scale-tomcat-deck:wjax2014`
-  * `open http://<dockerhost>:8007/scale-tomcat-deck:wjax2014`
+  * `docker run -d -ti -p 8003:80 rossbachp/docker-microservice:conli2014`
+  * `open http://<dockerhost>:8003/docker-microservice`
 
 Andreas & Peter
 
