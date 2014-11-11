@@ -9,7 +9,9 @@
 /test/tmp/
 /test/version_tmp/
 /tmp/
-
+target/
+tomcat.8080/
+dependency-reduced-pom.*
 ## Specific to RubyMotion:
 .dat*
 .repl_history
