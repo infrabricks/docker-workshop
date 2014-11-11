@@ -15,11 +15,11 @@ includes
    * contains images for ubuntu:latest and busybox:latest
    * demo images from rossbachp
  * serverspec
-   * spec for all items above 
+   * spec for all items above
  * etcd
  * registrator from progrium
  * ufw is stopped
- 
+
 
 Start slide container:
 =====================
@@ -35,5 +35,4 @@ Point browser to [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
 License
 =======
 The MIT License (MIT)
-Copyright (c) 2014 Andreas Schmidt
-
+Copyright (c) 2014 Andreas Schmidt and Peter Rossbach
