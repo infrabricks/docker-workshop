@@ -16,11 +16,11 @@ public class LinkRepository {
   public CouchDbClient init() {
 
     CouchDbProperties properties = new CouchDbProperties()
-    .setDbName(getConfigParameter("COUCHDB_NAME","links"))
+    .setDbName(getConfigParameter("COUCHDB_DATABASE_NAME","links"))
     .setCreateDbIfNotExist(true)
     .setProtocol("http")
-    .setHost(getConfigParameter("COUCHDB_HOST", "127.0.0.1"))
-    .setPort(Integer.parseInt(getConfigParameter("COUCHDB_PORT", "5984")))
+    .setHost(getConfigParameter("COUCHDB_PORT_5984_TCP_ADDR", "127.0.0.1"))
+    .setPort(Integer.parseInt(getConfigParameter("COUCHDB_PORT_5984_TCP_PORT", "5984")))
     .setMaxConnections(MAX_CONNECTIONS);
 
     dbClient = new CouchDbClient(properties);
@@ -48,7 +48,7 @@ public class LinkRepository {
   }
 
   public JsonObject findAny() {
-    String uri = dbClient.getBaseUri() + "links/_design/all/_view/all";
+    String uri = dbClient.getBaseUri() + getConfigParameter("COUCHDB_DATABASE_NAME","links") + "_design/all/_view/all";
     JsonObject jsonObject = dbClient.findAny(JsonObject.class, uri);
     return jsonObject;
   }
