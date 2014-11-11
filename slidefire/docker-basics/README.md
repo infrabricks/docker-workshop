@@ -25,6 +25,7 @@ Dieser Workshop vermittelt die Docker-Grundlagen in nachvollziehbaren Schritten 
   * Mit `http://<host>:8000/?print-pdf` erstellt man eine Druckversion der Präsentation.
     - Noch werden nicht alle Inhalte dargestellt.
     - Der dunkle Hintergrund schluckt Tinte.
+    - im ordner print befindet sich eine erster Version ein PDF zu erzeugen.
   * Erklärung der Präsentationstechnik [slidefire](https://github.com/rossbachp/revealjs-presentation)
 
 Viel Spaß
