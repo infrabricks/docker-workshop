@@ -242,7 +242,10 @@ $ docker pull redis:latest
   * **Wichtig:** Tag mit angeben! Sonst wird das gesamte Repository gezogen (z.B. Ubuntu 12.04/12.10/13.04/13.10/14.04  >> 1GB)
 
 -
-**`~$ docker pull` am Beispiel**
+**`~$ docker pull`**
+
+
+am Beispiel
 
 
   * Löschen eines Images und Pullen aus der lokalen Registry der VM.
@@ -260,6 +263,10 @@ $ docker pull 127.0.0.1:5000/dockerfile/nginx:latest
 Pulling repository 127.0.0.1:5000/dockerfile/nginx
 ...
 ```
+---
+### Docker-Images
+
+![](images/docker-command-images-deck.png)
 
 -
 **`~$ docker images | inspect`**
@@ -314,11 +321,11 @@ c2a5714574ba        35 hours ago        /bin/sh -c groupadd -r tomcat -g 4242 &&
 ...
 ```
 ---
-### Docker-Images
+### Docker-Container
 
-![](images/docker-command-images-deck.png)
+![](images/docker-command-container-deck.png)
 
--
+---
 **`~$ docker run`**
 ####  Das wichtigste Kommando: Container starten!
 
@@ -459,7 +466,7 @@ D /etc/sysctl.conf
   * Keine Besonderheiten. Interessantes Debugging-Werkzeug.
 -
 **`~$ docker top`**
-#### Prozessdetails eines Containers anzeigen
+####  Prozessdetails eines Containers anzeigen
 
 STDOUT/STDERR eines Containers ansehen.
 ***
@@ -478,13 +485,10 @@ root                4201                7159                0                   
 ***
   * Nur rudimentäre Informationen (s. deep dive später)
 ---
-## Ausflug: Namespaces, Prozesse, Netzwerk
-
----
 ## Ziel: Apache-Container manuell bauen 
 
 ```bash
-~$ CID=`docker run –tdi ubuntu`
+~$ CID=`docker run –tdi ubuntu:14.04`
 4fa4778a965316f24c968e47bf19ec1d555ac131279dcadc623113b95dd3555b
 
 ~$ docker attach $CID
@@ -508,9 +512,9 @@ Wenn wir apachectl -D FOREGROUD nutzen klappt es!
 
 -
 **`~$ docker commit`**
-#### Den Dateisystem-Stand festhalten
+####  Den Dateisystem-Stand festhalten
 
-Ein „Commit“ erzeugt ein neues Image auf Basis eines bestehenden Containers
+Ein **Commit** erzeugt ein neues Image auf Basis eines bestehenden Containers
 ***
 ```bash
 ~$ docker commit -a "infrabricks" -m "Just committed" 4fa4778a9653
@@ -538,7 +542,7 @@ REPOSITORY               TAG                 IMAGE ID            CREATED        
 **`~$ docker tag`**
 ####  Namen für Images
 
-  * Ein „tag“ gibt einem Image (anhand seiner ID) einen Namen
+  * Ein **tag** gibt einem Image (anhand seiner ID) einen Namen
   * docker tag [OPTIONS] IMAGE [REGISTRYHOST/][USERNAME/]NAME[:TAG]
 
 ***
@@ -559,7 +563,7 @@ infrabricks/httpd     2.2                 ffdb1d64ba4d        8 minutes ago     
   * Solange man nur lokal arbeitet, wird minimal nur ein Name benötigt.
   * Das Image hat nun diesen Namen, nicht die Container!
   * Sobald man in (private) Registries hochladen möchte, wird ein Registry-Host im Namen notwendig
-  * Tagen üben (Date Tag, Package Tag dpkg-query -l apache2)
+  * Tagen üben (Date Tag, Package Tag `dpkg-query -l apache2`)
 ---
 ### Ziel: Apache-Container starten 
 
@@ -575,12 +579,13 @@ infrabricks/httpd     2.2                 ffdb1d64ba4d        8 minutes ago     
 	/usr/sbin/apache2 -D FOREGROUND
 04cbe4ab97d71594b4b5383d07d8a499691be1dd5e027482edea48e7fe685084
 
-vagrant@docker-workshop:~$ netstat -nltp | grep 8000
+~$ netstat -nltp | grep 8000
 (No info could be read for "-p": geteuid()=1000 but you should be root.)
 tcp        0      0 127.0.0.1:8000          0.0.0.0:*               LISTEN      -
 
-vagrant@docker-workshop:~$ curl http://127.0.0.1:8000/
+~$ curl http://127.0.0.1:8000/
 ```
+
 ***
   `docker ps, docker top, docker inspect`
 
@@ -602,10 +607,10 @@ CONTAINER ID        IMAGE                       COMMAND                CREATED  
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 ```
 ***
-Stop kann mit –t <timeout_secs> ein Timeout gegeben werden, danach wird automatisch ein kill ausgeführt.
+Stop kann mit `–t <timeout_secs>` ein Timeout gegeben werden, danach wird automatisch ein kill ausgeführt.
 -
 **`~$ docker history`**
-#### Wie wurde ein Image zusammengesetzt?
+####  Wie wurde ein Image zusammengesetzt?
 
 Zeigt Änderungen der FS-Layer über die Zeit an.
 ***
@@ -662,6 +667,10 @@ drwxrwxr-x  2 1000 1000 4096 Sep 22 13:15 .
 drwxr-xr-x 22 root root 4096 Sep 22 13:24 ..
  rw-rw-r--  1 1000 1000    0 Sep 22 13:15 x
 ```
+---
+## Ausflug: Namespaces, Prozesse, Netzwerk
+
+  * separate slides....
 
 ---
 ## Ziel: Bauanleitung für Apache-Container 
@@ -690,8 +699,23 @@ ENTRYPOINT ["/usr/sbin/apache2"]
 CMD ["-D", "FOREGROUND"]
 ```
 -
+### Hupps,
+Warum klappt der Start mit `www-data` eigentlich?
+
+
+```bash
+adduser --disabled-password --gecos '' r
+adduser r sudo
+echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+su -m r -c /home/r/script.sh
+```
+***
+  * [docker-non-root](http://www.yegor256.com/2014/08/29/docker-non-root.html)
+  * [user and  docker](http://stackoverflow.com/questions/24308760/running-app-inside-docker-as-non-root-user)
+
+-
 **`~$ docker build`**
-#### Definierte Container-Images bauen
+####  Definierte Container-Images bauen
 
 Anhand einer Baubeschreibung (Dockerfile) ein Image aufbauen.
 ***
@@ -783,7 +807,7 @@ $ tar tf apache2.tar
 Bringt erstaunlicherweise die Prozessorlast des Hosts hoch.
 -
 ### Übung:
-Save, danach mit rmi images löschen und laden.
+Save, danach mit rmi images löschen und  laden.
 
 -
 **`~$ docker push `**
@@ -828,9 +852,11 @@ $ docker push "infrabricks/apache2:latest"
 [gift_of_sharing]( http://morethanasandwich.files.wordpress.com/2012/01/gift_of_sharing_colorpg.jpg)
 
 ---
-## Docker-Images
+## Docker-link
 
-![](images/docker-command-images-deck.png)
+  * Verbinden zwei Docker-Container
+  * Automatische Generierung des Host Names
+  * Automatische Generierung der Netwerkregeln
 
 -
 **`~$ docker run --link `**
@@ -838,10 +864,10 @@ $ docker push "infrabricks/apache2:latest"
 Ein Container wird mit einem bereits laufenden Container „verknüpft“ – der neue Container erhält Environmentvariablen und Netzwerk-Freischaltungen
 ***
 ```bash
-~$ docker run -tdi --name "n1" -p 8000:8000 ubuntu
+~$ docker run -tdi --name "n1" -p 8000:8000 ubuntu:14.04
 cc79ec0c9ae0ae04f50736ae791f2ac59362891eaa9f72bc563bd78ad69aeb48
 
-~$ docker run -tdi --name "n2" -p 9000:9000 --link="n1:n1" ubuntu
+~$ docker run -tdi --name "n2" -p 9000:9000 --link="n1:n1" ubuntu:14.04
 f8c1ac2643250d31e361709c1523f14eeb5e2404bcc7bf556f520cb2a8349967
 
 ~$ docker attach n2

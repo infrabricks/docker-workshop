@@ -21,16 +21,27 @@ includes
  * ufw is stopped
 
 
-Start slide container:
+Start slide container basics:
 =====================
 
 ```bash
-$ /data/mnt/docker.d/slides/microservice
+$ /data/mnt/slidefire/docker-basics
 $ ./build.sh
 $ ./run.sh
 ```
 
-Point browser to [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+Point browser to [http://127.0.0.1:8002/](http://127.0.0.1:8002/)
+
+Start slide container microservice:
+=====================
+
+```bash
+$ /data/mnt/slidefire/docker-microservice
+$ ./build.sh
+$ ./run.sh
+```
+
+Point browser to [http://127.0.0.1:8003/](http://127.0.0.1:8003/)
 
 License
 =======
