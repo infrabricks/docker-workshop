@@ -6,3 +6,5 @@ web:
    - "8090:8080"
 couchdb:
   build: couchdb
+  ports:
+  - "5984:5984"

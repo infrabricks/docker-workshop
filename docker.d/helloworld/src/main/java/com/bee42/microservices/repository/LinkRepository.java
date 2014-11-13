@@ -48,7 +48,7 @@ public class LinkRepository {
   }
 
   public JsonObject findAny() {
-    String uri = dbClient.getBaseUri() + getConfigParameter("COUCHDB_DATABASE_NAME","links") + "_design/all/_view/all";
+    String uri = dbClient.getBaseUri() + getConfigParameter("COUCHDB_DATABASE_NAME","links") + "/_design/all/_view/all";
     JsonObject jsonObject = dbClient.findAny(JsonObject.class, uri);
     return jsonObject;
   }
