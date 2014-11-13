@@ -1,0 +1,12 @@
+status:
+  build: .
+tomcat:
+  image: rossbachp/tomcat8
+  ports:
+   - "8009"
+   - "8080"
+  volumes_from
+   - status
+  environment:
+   - SERVICE_NAME: app
+
