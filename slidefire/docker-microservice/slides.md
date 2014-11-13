@@ -815,16 +815,20 @@ It´s up to you!
 ### Many Thanks for following!
 
 Start this presentation with
+
+
   * `docker run -d -ti -p 8003:80 rossbachp/docker-microservice:conli2014`
   * `open http://<dockerhost>:8003/docker-microservice`
 
+***
 Andreas & Peter
 
 
 follow our blog [infrabricks.de](http://www.infrabricks.de)
 
-@PRossbach
 @aschmidt75
+@PRossbach
+
 
 -
 ## bee42 boarding time

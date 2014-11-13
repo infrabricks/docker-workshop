@@ -120,9 +120,9 @@
     - Get a stick!
     - `docker-workshop_docker-workshop-vm_*.ova`
     - Double Click oder Virtual Box > File > Import Appliance ...
-    - Login: `ssh -p 2200 -l vagrant localhost` Password: vagrant
+    - Login: `ssh -p 2222 -l vagrant localhost` Password: vagrant
   ```
-  $ ssh -p 2200 -l vagrant localhost
+  $ ssh -p 2222 -l vagrant localhost
   vagrant@localhost's password:
   Welcome to Ubuntu 14.04 LTS (GNU/Linux 3.13.0-24-generic x86_64)
   ...
@@ -161,11 +161,11 @@ Client version: 1.3.1
 Client API version: 1.15
 Go version (client): go1.3.3
 Git commit (client): 4e9bbfa
-OS/Arch (client): darwin/amd64
-Server version: 1.3.0
+OS/Arch (client): linux/amd64
+Server version: 1.3.1
 Server API version: 1.15
 Go version (server): go1.3.3
-Git commit (server): c78088f
+Git commit (server): 4e9bbfa
 ```
 ***
   * Mit Docker 1.3 kommuniziert der Client mit dem Server Remote via SSL damit *Trusted* Images überprüft werden können (boot2docker 1.3)
@@ -351,9 +351,9 @@ CTRL+P CTRL+Q zum detachen der shell
 
   * Was in Wirklichkeit beim Start/Run geschieht:
   * Container start bedeutet ja einiges
-    - Write layer über das Images
+    - Write Layer über das Images
     - Bereitstellen des Netzwerks
-    - Schaffen eines Namespace
+    - Erzeugen der verschiedenen Namespaces
     - Einschränkungen auf der Prozess vornehmen (CGroups, Capabilities)
     - Optional
       - Links vermitteln
@@ -689,7 +689,6 @@ RUN apt-get install -yqq apache2
 
 ENV APACHE_RUN_USER www-data
 ENV APACHE_RUN_GROUP www-data
-ENV APACHE_LOG_DIR /var/log/apache2
 ENV APACHE_LOG_DIR /var/log/apache2
 ENV APACHE_LOCK_DIR /var/run/lock
 ENV APACHE_PID_FILE /var/log/apache2/apache.pid
