@@ -270,7 +270,7 @@ Pulling repository 127.0.0.1:5000/dockerfile/nginx
 
 -
 **`~$ docker images | inspect`**
-#### Die lokalen Images ansehen
+####  Die lokalen Images ansehen
 
 Ansehen der lokal gespeicherten Images, inkl. Details
 ***
@@ -671,6 +671,7 @@ drwxr-xr-x 22 root root 4096 Sep 22 13:24 ..
 ## Ausflug: Namespaces, Prozesse, Netzwerk
 
   * separate slides....
+  * `docs/Conli2014-Linux-Docker-Namespaces-Process.pdf`
 
 ---
 ## Ziel: Bauanleitung für Apache-Container 
