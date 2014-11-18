@@ -672,6 +672,7 @@ drwxr-xr-x 22 root root 4096 Sep 22 13:24 ..
 
   * separate slides....
   * `docs/Conli2014-Linux-Docker-Namespaces-Process.pdf`
+  * [docker-network-playground](https://speakerdeck.com/aschmidt75/docker-network-playground)
 
 ---
 ## Ziel: Bauanleitung für Apache-Container 
